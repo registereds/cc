@@ -1,0 +1,13 @@
+rendering: ~
+security:  ~
+
+# insert your own filters here
+remember:  
+  class: RememberMeFilter
+  param:
+    cookie_name: cc_rm
+    condition:   %APP_ENABLE_REMEMBER_ME%
+
+
+cache:     ~
+execution: ~

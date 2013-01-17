@@ -1,0 +1,17 @@
+test:
+  doctrine:
+    class: sfDoctrineDatabase
+    param:
+      dsn: 'mysql:host=localhost;dbname=campuscenter_test'
+      username: root
+      password: root
+      
+all:
+  doctrine:
+    class: sfDoctrineDatabase
+    param:
+      dsn:      mysql:host=localhost;dbname=campuscenter
+      username: root
+      password: root
+      
+      

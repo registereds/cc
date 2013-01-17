@@ -1,0 +1,173 @@
+Category:
+  actAs:  
+    Sluggable:
+      unique: true
+      fields: [name]
+      canUpdate: true
+  options:
+    type: MyISAM
+  columns:
+    name: { type: string(255), notnull: true}
+    description: { type: string(255), notnull: true, default: ''}
+    ranking: { type: integer, notnull: true, default: 0 }
+    module: 
+      type: enum
+      values: [marketplace, events, forum]
+      
+User:
+  actAs:
+    Timestampable: ~
+  options:
+    type: MyISAM
+  columns:
+    nick_name: { type: string(50), notnull: true}
+    email: { type: string(255), notnull: true, unique: true }
+    password: { type: string(12), notnull: true}
+    password_hash: { type: string(40), notnull: true }
+    salt: { type: string(32), notnull: true }    
+    reset_password_hash: { type: string(40), notnull: true }
+    reset_expire_at:  {  type: integer ,notnull: true,  default: '0' }
+    register_hash: { type: string(32), notnull: true }
+    last_signin_at:  {  type: integer ,notnull: true,  default: '0' }
+    status:
+      type: enum
+      values: [new, live, suspended]
+    campus_id: { type: integer }
+    city_id: { type: integer }
+  relations:
+    Campus: { onDelete: SET NULL, local: campus_id, foreign: id, foreignAlias: CampusListings }
+    City: { onDelete: SET NULL, local: city_id, foreign: id, foreignAlias: CityListings }
+    
+Listing:
+  actAs:  
+    Timestampable: ~
+    Searchable:
+      fields: [name, description]    
+    Sluggable:
+      unique: false
+      fields: [name]
+      canUpdate: true    
+  options:
+    type: MyISAM
+  columns:
+    category_id: { type: integer }
+    campus_id: { type: integer }
+    city_id: { type: integer }
+    user_id: { type: integer }
+    module: 
+      type: enum
+      values: [marketplace, events, forum]
+    status:
+      type: enum
+      values: [active, inactive, deleted]
+    name: { type: string(100), notnull: true}
+    description: { type: clob, notnull: true, default: ''}
+    contact: { type: string(255), notnull: true, default: '' }
+    category_slug: { type: string(255), notnull: true }
+    campus_slug: { type: string(255), notnull: true }
+    audit_status: { type: integer, notnull: true, default: 0 }
+    count_view: { type: integer, notnull: true, default: 1 }
+    count_report: { type: integer, notnull: true, default: 0 }
+    expires_at: { type: timestamp, notnull: true }
+    deleted_at: { type: timestamp, notnull: true }
+    event_start_at: { type: timestamp, notnull: true }
+  relations:
+    Category: { onDelete: SET NULL, local: category_id, foreign: id, foreignAlias: CategoryListings }
+    User: { onDelete: SET NULL, local: user_id, foreign: id, foreignAlias: UserListings }
+    Campus: { onDelete: SET NULL, local: campus_id, foreign: id, foreignAlias: CampusListings }
+    City: { onDelete: SET NULL, local: city_id, foreign: id, foreignAlias: CityListings }
+
+Comment:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  options:
+    type: MyISAM
+  columns:
+    listing_id: { type: integer }
+    user_id: { type: integer }
+    parent_id: { type: integer }
+    description: { type: string(3000), notnull: true, default: '' }
+    audit_status:
+      type: enum
+      values: [new, live, canceled]
+      default: new
+  relations:
+    Listing: { onDelete: SET NULL, local: listing_id, foreign: id, foreignAlias: ListingComments }
+    User: { onDelete: SET NULL, local: user_id, foreign: id, foreignAlias: UserComments }
+    
+Campus:
+  actAs:
+    Sluggable:
+      unique: true
+      fields: [name]
+      canUpdate: true
+  options:
+    type: MyISAM
+  columns:
+    name: { type: string(100), notnull: true}
+    abbv: { type: string(100), notnull: true}
+    city_id: { type: integer }
+  indexes:
+    nameindex:
+      fields: [name]
+      type: unique
+  relations:
+    City: { onDelete: SET NULL, local: city_id, foreign: id, foreignAlias: CityCampuses }
+
+City:
+  options:
+    type: MyISAM
+  columns:
+    name: { type: string(100), notnull: true}
+
+Location:
+  options:
+    type: MyISAM
+  columns:
+    pcode: { type: string(4), notnull: true, primary: true}
+    locality: { type: string(100), notnull: true, primary: true}
+    state: { type: string(3), notnull: true, primary: true}
+
+Image:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  options:
+    type: MyISAM
+  columns:
+    listing_id: { type: integer }
+    user_id: { type: integer }
+    name: { type: string(255), notnull: true}
+    description: { type: string(255), notnull: true, default: '' }
+    url: { type: string(1024), notnull: true, default: '' }
+    audit_status:
+      type: enum
+      values: [new, live, canceled]
+      default: new
+  relations:
+    Listing: { onDelete: SET NULL, local: listing_id, foreign: id, foreignAlias: ListingImages }
+    User: { onDelete: SET NULL, local: user_id, foreign: id, foreignAlias: UserImages }
+#CREATE VIEW tag AS SELECT id AS listing_id, keyword AS text, COUNT( * ) AS weight
+#FROM listing_index
+#GROUP BY listing_id, keyword
+#ALTER TABLE  `listing_index` CHANGE  `position`  `position` BIGINT( 20 ) NOT NULL AUTO_INCREMENT
+
+# $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
+#	$doctrine->query('INSERT INTO `listing_index` (keyword, field, position, id) VALUES ("'.addslashes($kw).'", "search", '.$listingId.',  1) ON duplicate KEY UPDATE weight=weight+1');
+
+Tag:
+  options:
+    type: MyISAM
+  columns:
+    listing_id: { type: integer, primary: true }
+    text: { type: string(255), notnull: true, primary: true}
+    weight: { type: integer }
+  relations:
+    Listing: { onDelete: CASCADE, local: listing_id, foreign: id, foreignAlias: ListingTags }
+    
+
+MailMessage:
+  actAs: { Timestampable: ~ }
+  columns:
+    message: { type: blob, notnull: true }

@@ -1,0 +1,33 @@
+signInFormFancySuccess:
+  layout:         fancyLayout
+  stylesheets:    [-*, popup.css]
+  javascripts:    [-jquery.fancybox.js，jquery, jquery.blockUI.js]
+signInFeedbackFancySuccess:
+  layout:         fancyLayout
+  javascripts:    [-jquery.fancybox.js，jquery, jquery.blockUI.js]
+  stylesheets:    [-*, popup.css]
+passResetFormFancySuccess:
+  layout:         fancyLayout
+  javascripts:    [-jquery.fancybox.js，jquery, jquery.blockUI.js]
+  stylesheets:    [-*, popup.css]
+passResetFeedbackFancySuccess:
+  layout:         fancyLayout
+  javascripts:    [-jquery.fancybox.js，jquery, jquery.blockUI.js]
+  stylesheets:    [-*, popup.css]
+registerFormFancySuccess:
+  layout:         fancyLayout
+  javascripts:    [-jquery.fancybox.js，jquery, jquery.blockUI.js]
+  stylesheets:    [-*, popup.css]
+registerFeedbackFancySuccess:
+  layout:         fancyLayout
+  javascripts:    [-jquery.fancybox.js，jquery, jquery.blockUI.js]
+  stylesheets:    [-*, popup.css]
+
+
+passResetNewPassFormSuccess:
+  layout:         simpleLayout
+  javascripts:    [-*]
+activateFormSuccess:
+  layout:         simpleLayout
+  stylesheets:    [autocomplete.css]
+  javascripts: [-jquery.fancybox.js, autocomplete/jquery.autocomplete.min.js, validate/jquery.validate.min.js]

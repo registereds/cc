@@ -1,0 +1,7 @@
+# default values
+all:
+  category_listings_per_page: 20
+  enable_remember_me: on
+  site_domain: campuscenter.com.au
+  site_name: CampusCenter
+  site_root: /cc/web

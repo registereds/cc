@@ -1,0 +1,3 @@
+editSuccess:
+  stylesheets:    [jwysiwyg/jquery.wysiwyg.css]
+  javascripts:    [jwysiwyg/jquery.wysiwyg.js]

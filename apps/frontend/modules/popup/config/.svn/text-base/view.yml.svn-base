@@ -1,0 +1,4 @@
+default: 
+  has_layout:     true
+  layout:         popupLayout  
+  stylesheets:    [-*, popup.css]

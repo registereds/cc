@@ -1,0 +1,92 @@
+10
+
+dir
+14
+file:///Users/dlin/Documents/svn/cc/cc
+file:///Users/dlin/Documents/svn/cc
+
+
+
+2010-09-09T04:24:37.217290Z
+14
+dlin
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+7c6ca81d-ce9e-4d4e-b4e5-de9ab5248987
+
+test
+dir
+
+plugins
+dir
+
+log
+dir
+
+apps
+dir
+
+cache
+dir
+
+symfony
+file
+
+
+
+
+2009-11-04T00:21:54.000000Z
+ec0244c82ba8f52899e48b4e473f78e8
+2010-05-08T00:28:27.781776Z
+2
+dlin
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+446
+
+config
+dir
+
+lib
+dir
+
+nbproject
+dir
+
+data
+dir
+
+web
+dir
+

@@ -1,0 +1,1 @@
+<?php include_partial('popup/passResetFormFeedback', array('fancyBox'=>true,'grey'=>1)); ?>

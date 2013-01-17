@@ -1,0 +1,4 @@
+postFormMarketplace:
+  stylesheets:    [jwysiwyg/jquery.wysiwyg.css, autocomplete.css]
+  javascripts:    [jwysiwyg/jquery.wysiwyg.js, autocomplete/jquery.autocomplete.min.js, validate/jquery.validate.min.js, ajaxupload]
+  

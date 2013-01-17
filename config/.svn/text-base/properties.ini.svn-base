@@ -1,0 +1,4 @@
+[symfony]
+  name=campuscenter
+  author= David Lin
+  orm=Doctrine

@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * listing actions.
+ *
+ * @package    campuscenter
+ * @subpackage listing
+ * @author     David Lin
+ * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ */
+class listingActions extends sfActions
+{
+ /**
+  * Executes index action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executePostForm(sfWebRequest $request)
+  {
+      $this->categoryId = $request->getParameter('c', 0);
+      $module = $request->getParameter('m', '');
+
+
+      
+      $categories = $this->categories = Doctrine::getTable('Category')->createQuery('c')->orderBy('name')->execute();
+      $cats = array();
+      foreach ($categories as $c){
+          $cats[$c['module']][$c['id']] = $c;
+      }
+
+      if(in_array($module,array(Listing::MODULE_EVENTS, Listing::MODULE_FORUM, Listing::MODULE_MARKETPLACE))){
+        $this->categories = $cats[$module];
+
+      }else{
+          $this->categories = $cats;
+      }
+      
+
+      
+ 
+      
+      switch ($module){
+          case Listing::MODULE_MARKETPLACE:
+          case Listing::MODULE_EVENTS:
+          case Listing::MODULE_FORUM:
+              return ucfirst($module);
+              break;
+
+          default:
+              return 'SelectModule';
+              
+      }
+
+  }
+
+
+   /**
+  * Executes post action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executePost(sfWebRequest $request){
+
+
+
+  }
+
+
+ /**
+  * Executes postFeedback action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executePostFeedback(sfWebRequest $request){
+
+
+
+  }
+
+
+
+
+
+
+}

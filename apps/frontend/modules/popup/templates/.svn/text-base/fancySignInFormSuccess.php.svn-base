@@ -1,0 +1,1 @@
+<?php include_partial('popup/signInForm', array('fancyBox'=>true,'grey'=>1)); ?>

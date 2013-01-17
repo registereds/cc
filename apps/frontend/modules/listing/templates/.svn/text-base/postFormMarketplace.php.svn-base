@@ -1,0 +1,112 @@
+
+<div class="clearfix">
+    <h2 class="crumbs">
+        <?php echo image_tag('module_listing') ?><span class='normal'><?php echo link_to1('Post a New Listing', 'listing/postForm'); ?></span>
+        &raquo;
+        <?php echo image_tag('module_marketplace'); ?>Sell & Buy Items
+    </h2>
+
+    <div class="home-content lfloat">
+        <form id="postForm" action="<?php echo url_for('account/activate'); ?>"  method="post">
+            <div class="form_section">
+                <input type="hidden" name="data[catId]" id="catId" value="<?php echo $categoryId; ?>" />
+                <h3 class="form_section_header">Category</h3>
+
+                <p class="box-padding" id="catMsg" style="<?php echo ($categoryId > 0 && $categories[$categoryId]) ? '' : 'display:none;'; ?>">
+                    You are posting a listing in <span class='bold' id="catName"><?php echo $categories[$categoryId]['name']; ?></span>
+                    <a id="cat_change_link" style="display:none;" onclick="$('#cat_selector').show();return false;" href="<?php echo url_for('listing/postForm'); ?>" class="smaller natural"><sup>[Change]</sup></a>
+                </p>
+
+
+                <div id="cat_selector" class="rbox grey" style="<?php echo ($categoryId > 0 && $categories[$categoryId]) ? 'display:none;' : ''; ?>">
+                    <div >
+                        <div class="rbox_head"><b><i></i><?php echo image_tag('icon_delete', array('class' => 'close-btn', 'id' => 'cat_selector_close_btn', 'style' => ($categoryId > 0 ? '' : 'display:none'))); ?></b></div>
+                    </div>
+                    <div class="rbox_body">
+
+                        <div class="content">
+                            <div class="box-padding">
+                                <p class="instruction">Please select a category:</p>
+                                <ul class="float box-padding clearfix">
+
+                                    <?php
+                                    foreach ($categories as $cat) {
+                                        echo '<li>' . link_to1($cat['name'], 'listing/postForm?m=' . Listing::MODULE_MARKETPLACE . '&c=' . $cat['id'], array('class' => 'cat_select_link', 'catId' => $cat['id'])) . '</li>';
+                                    }
+                                    ?>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="rbox_tail"><b><i></i></b></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form_section" >
+                <h3 class="form_section_header">Listing Detail</h3>
+
+                <fieldset>
+                    <div class="short">
+                        <label for="name"><span class="error">*</span>Title: </label>
+                    </div>
+                    <div class="long field">
+                        <input class="name-text" type="text" name="data[name]" id="name" style="width:350px" />                        
+                        <span class='smaller name-counter'></span>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="short">
+                        <label for="description"><span class="error">*</span>Description: </label>
+                    </div>
+                    <div class="field">
+                        <textarea name="data[description]" id="description"  rows="15" style="width:600px"></textarea>
+                    </div>
+                </fieldset>
+
+            </div>
+            <?php include_partial('partials/formChallenge'); ?>
+
+                                </form>
+                        
+                            </div>
+    <?php include_partial('postFormRightColumn'); ?>
+</div>
+
+<script type="text/javascript">
+    $('#cat_change_link').show();
+    $('.cat_select_link').each(function(){$(this).click(function(){$('#catId').val($(this).attr('catId'));$('#catName').html($(this).html());$('#catMsg').show();$('#catMsg').show();$('#cat_selector_close_btn').show();$(this).parents('.rbox').each(function(){$(this).hide()});return false;})});
+    $(function()
+    {
+        $('#description').wysiwyg();
+    });
+    $('#postForm')
+    .each(
+        function() {
+            var textTag = $('.name-text', this);
+            var counterTag = $('.name-counter', this);
+            var limit = 50;
+            textTag
+            .keyup( function() {
+                var text = textTag.val();
+                var textlength = text.length;
+                if (textlength > limit) {
+                    counterTag
+                    .html('You cannot write more than ' + limit + ' characters!');
+                    textTag.val(text.substr(0, limit));
+                    counterTag.css('color', '#f00');
+                    return false;
+                } else {
+                    counterTag
+                    .html('You have ' + (limit - textlength) + ' characters left.');
+                    counterTag.css('color', '#999');
+
+                    return true;
+
+                }
+            });
+
+        });
+</script>
